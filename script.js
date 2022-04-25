@@ -25,6 +25,7 @@ leftButtons.forEach(element => {
                 rightActiveButton = rbtn.innerText; 
             }
         })
+        leftInputExchange();
         rightInputExchange();
     })
     leftInputExchange();
@@ -47,6 +48,7 @@ rightButtons.forEach(element => {
                 leftActiveButton = lbtn.innerText; 
             }
         })
+        rightInputExchange();
         leftInputExchange();
     })
     rightInputExchange();
