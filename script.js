@@ -11,7 +11,6 @@ let rightActiveButton = "USD";
 
 leftButtons.forEach(element => {
     element.addEventListener("click" , () => {
-
         leftButtons.forEach(btn => {
             btn.classList.remove('active');
         })
@@ -25,16 +24,13 @@ leftButtons.forEach(element => {
                 rightActiveButton = rbtn.innerText; 
             }
         })
-        leftInputExchange();
         rightInputExchange();
     })
     leftInputExchange();
 })
 
-
 rightButtons.forEach(element => {
     element.addEventListener("click" , () => {
-
         rightButtons.forEach(btn => {
             btn.classList.remove('active');
         }); 
@@ -48,7 +44,6 @@ rightButtons.forEach(element => {
                 leftActiveButton = lbtn.innerText; 
             }
         })
-        rightInputExchange();
         leftInputExchange();
     })
     rightInputExchange();
@@ -60,9 +55,14 @@ function leftInputExchange () {
     fetch(`https://api.exchangerate.host/latest?base=${leftActiveButton}&symbols=${rightActiveButton}`)
         .then(response => response.json())
         .then(data => {
-            rightInput.value = Number(leftInput.value) * data.rates[`${rightActiveButton}`]
-
-            leftCurrency.innerText = `1${leftActiveButton} = ${data.rates[`${rightActiveButton}`]} ${rightActiveButton}`
+            if (leftInput.value !== ""){
+                rightInput.value = Number(leftInput.value) * data.rates[`${rightActiveButton}`].toFixed(4);
+            }
+            else{
+                rightInput.value = "";
+            }
+            leftCurrency.innerText = `1 ${leftActiveButton} = ${data.rates[`${rightActiveButton}`].toFixed(4)} ${rightActiveButton}`
+            rightCurrency.innerText = `1 ${rightActiveButton} = ${(1 / data.rates[`${rightActiveButton}`]).toFixed(4)} ${leftActiveButton}`
         })
 }
 
@@ -72,8 +72,13 @@ function rightInputExchange () {
     fetch(`https://api.exchangerate.host/latest?base=${rightActiveButton}&symbols=${leftActiveButton}`)
         .then(response => response.json())
         .then(data => {
-            leftInput.value = Number(rightInput.value) * data.rates[`${leftActiveButton}`]
-
-            rightCurrency.innerText = `1${rightActiveButton} = ${data.rates[`${leftActiveButton}`]} ${leftActiveButton}`
+            if (rightInput.value !== ""){
+                leftInput.value = Number(rightInput.value) * data.rates[`${leftActiveButton}`].toFixed(4);
+            }
+            else{
+                leftInput.value = "";
+            }
+            rightCurrency.innerText = `1 ${rightActiveButton} = ${data.rates[`${leftActiveButton}`].toFixed(4)} ${leftActiveButton}`
+            leftCurrency.innerText = `1 ${leftActiveButton} = ${(1 / data.rates[`${leftActiveButton}`]).toFixed(4)} ${rightActiveButton}`
         })
 } 
