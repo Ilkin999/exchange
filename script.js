@@ -11,6 +11,8 @@ let rightActiveButton = "USD";
 
 let activeInput;
 
+// Buttons and inputs
+
 leftButtons.forEach(element => {
     element.addEventListener("click" , () => {
         
@@ -63,6 +65,8 @@ rightButtons.forEach(element => {
 })
 
 leftInput.addEventListener("input", leftInputExchange);
+
+// Api fetch
 
 function leftInputExchange () {
     activeInput = "left";
